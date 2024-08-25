@@ -1,0 +1,54 @@
+{
+    "name": "xypp/store-virtual-item",
+    "description": "Add virtual items to xypp/store",
+    "keywords": [
+        "flarum"
+    ],
+    "type": "flarum-extension",
+    "license": "GPL-3.0",
+    "require": {
+        "flarum/core": "^1.2.0",
+        "xypp/store": "*"
+    },
+    "authors": [
+        {
+            "name": "小鱼飘飘",
+            "email": "z@xypp.cc",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Xypp\\StoreVirtualItem\\": "src/"
+        }
+    },
+    "extra": {
+        "flarum-extension": {
+            "title": "Store Virtual Item",
+            "category": "feature",
+            "icon": {
+                "name": "fas fa-boxes",
+                "color": "#fff",
+                "backgroundColor": "#f57f17"
+            }
+        },
+        "flarum-cli": {
+            "modules": {
+                "admin": true,
+                "forum": true,
+                "js": true,
+                "jsCommon": true,
+                "css": true,
+                "locale": true,
+                "gitConf": true,
+                "githubActions": true,
+                "prettier": true,
+                "typescript": true,
+                "bundlewatch": false,
+                "backendTesting": true,
+                "editorConfig": true,
+                "styleci": true
+            }
+        }
+    }
+}
