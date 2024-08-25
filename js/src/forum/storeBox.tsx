@@ -7,11 +7,11 @@ export function initStore() {
         "virtual-item",
         app.translator.trans("xypp-store-virtual-item.forum.store.name") as string,
         async function (records: Record<string, string>) {
-            const data: { data: { name: string, count: number }[] } = await app.request({
+            const data: { name: string, count: number }[] = await app.request({
                 method: "GET",
                 url: app.forum.attribute("apiUrl") + "/virtual-items-name"
             })
-            data.data.forEach((item) => {
+            data.forEach((item) => {
                 records[item.name] = `${item.name}(${item.count})`
             })
         },
