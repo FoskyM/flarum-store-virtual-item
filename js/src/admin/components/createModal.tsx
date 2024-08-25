@@ -9,7 +9,7 @@ export default class createModal extends Modal {
     name: string = "";
     data: {
         key: string,
-        value: string
+        content: string
     }[] = [];
     loading = false;
     className(): string {
@@ -45,8 +45,8 @@ export default class createModal extends Modal {
                                 <td><input className="FormControl" type="text" value={item.key} onchange={((e: InputEvent) => {
                                     this.data[index].key = (e.target as HTMLInputElement).value;
                                 }).bind(this)} /></td>
-                                <td><input className="FormControl" type="text" value={item.value} onchange={((e: InputEvent) => {
-                                    this.data[index].value = (e.target as HTMLInputElement).value;
+                                <td><input className="FormControl" type="text" value={item.content} onchange={((e: InputEvent) => {
+                                    this.data[index].content = (e.target as HTMLInputElement).value;
                                 }).bind(this)} /></td>
                                 <td>
                                     <Button onclick={(() => {
@@ -89,7 +89,7 @@ export default class createModal extends Modal {
     addRow() {
         this.data.push({
             key: "",
-            value: ""
+            content: ""
         });
     }
     convert() {
@@ -103,12 +103,12 @@ export default class createModal extends Modal {
             if (pos != -1) {
                 this.data.push({
                     key: text.substring(0, pos),
-                    value: text.substring(pos + 1)
+                    content: text.substring(pos + 1)
                 });
             } else {
                 this.data.push({
                     key: text,
-                    value: ""
+                    content: ""
                 });
             }
         });
