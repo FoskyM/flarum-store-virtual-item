@@ -1,0 +1,37 @@
+xypp-store-virtual-item:
+  admin:
+    table:
+      all: 全部
+      check: "-"
+      id: Id
+      name: 类型名
+      key: 键名
+      assign: 分配用户
+      operation: 操作
+      delete: 删除
+      create: 创建
+      delete_batch: 批量删除(共{count})
+      load_more: 加载更多
+      remove_confirm: 你确定要删除吗？
+    create:
+      title: "创建虚拟物品"
+      name: 类型名
+      key: 键名
+      content: 内容
+      fillTip: "将键名/内容填入下方"
+      submit: 创建
+      add: 添加
+      convert: 转换 键名-内容
+      key_required: 键名不能为空
+  forum:
+    store:
+      name: 虚拟物品
+    select:
+      title: 配置
+      name: "当前选择的类型名为: {name}"
+      icon: 图标
+      desc: 描述
+      rest: 从存储的虚拟物品中直接显示剩余数量.
+      submit: 提交
+  api:
+    no-available: "没有可用的物品"

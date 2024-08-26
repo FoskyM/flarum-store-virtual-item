@@ -24,7 +24,7 @@ class VirtualItemProvider extends AbstractStoreProvider
     }
     function purchase(StoreItem $item, User $user, PurchaseHistory|null $old = null, PurchaseContext $context): array|bool|string
     {
-        $name = $item->provider_data;
+        $name = json_decode($item->provider_data)->name;
         $item = VirtualItem::getAndAssign($name, $user);
         if ($item) {
             return $item->id;
@@ -34,20 +34,17 @@ class VirtualItemProvider extends AbstractStoreProvider
     }
     function canPurchase(StoreItem $item, User $user): bool|string
     {
-        return VirtualItem::where('name', $item->provider_data)->whereNull('assign_user_id')->exists();
+        $providerDef = json_decode($item->provider_data);
+        if ($providerDef->rest) {
+            $count = VirtualItem::where('name', $providerDef->name)->whereNull('assign_user_id')->count();
+            $item->rest_cnt = $count;
+            return $count > 0;
+        }
+        return VirtualItem::where('name', $providerDef->name)->whereNull('assign_user_id')->exists();
     }
     function serializeHistory(PurchaseHistory $item): array
     {
-        $virtualItem = VirtualItem::where('assign_history_id', $item->id)->first();
-        if (!$virtualItem) {
-            /**
-             * @var StoreItem $storeItem 
-             */
-            $storeItem = $item->store_item()->first();
-            $virtualItem = VirtualItem::lockForUpdate()->where('assign_user_id', $item->user_id)->where("name", $storeItem->provider_data)->first();
-            $virtualItem->assign_history_id = $item->id;
-            $virtualItem->save();
-        }
+        $virtualItem = VirtualItem::where('id', $item->data)->first();
         return [
             'id' => $virtualItem->id,
             'name' => $virtualItem->name,

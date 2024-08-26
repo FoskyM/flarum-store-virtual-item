@@ -6,7 +6,7 @@ use Flarum\User\User;
 
 /**
  * @property int $id 
- * @property int $assign_history_id
+ * @property int $assign_user_id
  * @property string $name
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at

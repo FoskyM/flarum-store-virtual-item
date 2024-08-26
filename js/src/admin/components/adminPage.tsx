@@ -5,6 +5,7 @@ import { showIf } from "../../common/utils/NodeUtil";
 import LoadingIndicator from "flarum/common/components/LoadingIndicator";
 import VirtualItem from "../../common/models/VirtualItem";
 import Checkbox from "flarum/common/components/Checkbox";
+import Select from "flarum/common/components/Select";
 import createModal from "./createModal";
 function _trans(key: string, ...a: any[]) {
     return app.translator.trans(`xypp-store-virtual-item.admin.table.${key}`, ...a);
@@ -16,6 +17,7 @@ export default class adminPage extends ExtensionPage {
     more: boolean = false;
     item_loading: boolean = false;
     offset: number = 0;
+    filterMap: Record<string, string> = {}
     currentFilter: string = "all";
     isRemoving: Record<string, boolean> = {};
     batchRemoving: boolean = false;
@@ -24,6 +26,15 @@ export default class adminPage extends ExtensionPage {
     oncreate(vnode: any): void {
         super.oncreate(vnode);
         this.loadMore();
+        app.request({
+            method: "GET",
+            url: app.forum.attribute("apiUrl") + "/virtual-items-name"
+        }).then(((data: { name: string, count: number }[]) => {
+            this.filterMap = { all: _trans("all") as string };
+            data.forEach((item) => {
+                this.filterMap[item.name] = `${item.name}(${item.count})`;
+            })
+        }) as any)
     }
     content(vnode: any) {
         return <div className="xypp-store-virtual-item-adminPage-container">
@@ -31,6 +42,13 @@ export default class adminPage extends ExtensionPage {
                 <Button className="Button Button--primary" onclick={this.create.bind(this)} >
                     {_trans("create")}
                 </Button>
+                <Select options={this.filterMap} value={this.currentFilter} onchange={((e: string) => {
+                    this.currentFilter = e;
+                    this.offset = 0;
+                    this.items = [];
+                    this.more = true;
+                    this.loadMore();
+                }).bind(this)}></Select>
                 {showIf(this.selected.length > 0,
                     <Button className="Button Button--primary" onclick={this.removeBatch.bind(this)} disabled={this.batchRemoving} loading={this.batchRemoving} >
                         {_trans("delete_batch", { count: this.selected.length })}

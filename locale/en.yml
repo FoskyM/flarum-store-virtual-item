@@ -1,6 +1,7 @@
 xypp-store-virtual-item:
   admin:
     table:
+      all: All
       check: "-"
       id: Id
       name: Name
@@ -17,7 +18,7 @@ xypp-store-virtual-item:
       name: Item name
       key: Key
       content: Content
-      fillTip: "Put your key/content below. " 
+      fillTip: "Put your key/content below. "
       submit: Create
       add: Add
       convert: Convert Key-Content
@@ -25,5 +26,12 @@ xypp-store-virtual-item:
   forum:
     store:
       name: Virtual Item
+    select:
+      title: Configure
+      name: "Current selected item name: {name}"
+      icon: Icon
+      desc: Description
+      rest: Show the rest count by storage.
+      submit: Submit
   api:
     no-available: "No available item"
