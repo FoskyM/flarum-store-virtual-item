@@ -23,4 +23,4 @@ php flarum cache:clear
 ## Links
 
 - [Packagist](https://packagist.org/packages/xypp/store-virtual-item)
-- [GitHub](https://github.com/xypp/store-virtual-item)
+- [GitHub](https://github.com/zxy19/store-virtual-item)
