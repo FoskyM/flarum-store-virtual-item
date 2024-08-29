@@ -24,4 +24,3 @@ php flarum cache:clear
 
 - [Packagist](https://packagist.org/packages/xypp/store-virtual-item)
 - [GitHub](https://github.com/xypp/store-virtual-item)
-- [Discuss](https://discuss.flarum.org/d/PUT_DISCUSS_SLUG_HERE)
