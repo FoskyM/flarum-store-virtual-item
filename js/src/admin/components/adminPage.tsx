@@ -70,7 +70,7 @@ export default class adminPage extends ExtensionPage {
                         </span>
 
                         {showIf(this.selected.length > 0,
-                            <Button className="Button Button--primary" onclick={this.removeBatch.bind(this)} disabled={this.batchRemoving} loading={this.batchRemoving} >
+                            <Button className="Button Button--danger" onclick={this.removeBatch.bind(this)} disabled={this.batchRemoving} loading={this.batchRemoving} >
                                 {_trans("delete_batch", { count: this.selected.length })}
                             </Button>
                         )}
@@ -150,7 +150,14 @@ export default class adminPage extends ExtensionPage {
     }
 
     create() {
-        app.modal.show(createModal);
+        app.modal.show(createModal, {
+          itemsCreated: () => {
+            this.offset = 0;
+            this.items = [];
+            this.more = true;
+            this.loadMore();
+          }
+        });
     }
     async loadMore() {
         this.item_loading = true;

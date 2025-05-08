@@ -1,17 +1,25 @@
-import Modal from "flarum/common/components/Modal";
+import type Mithril from 'mithril'
+import Modal, { IInternalModalAttrs } from "flarum/common/components/Modal";
 import app from "flarum/admin/app";
 import Button from "flarum/common/components/Button";
 import Alert from "flarum/common/components/Alert";
 function _trans(key: string, ...a: any[]) {
     return app.translator.trans(`xypp-store-virtual-item.admin.create.${key}`, ...a);
 }
-export default class createModal extends Modal {
+interface createModalAttrs extends IInternalModalAttrs {
+    itemsCreated?: CallableFunction
+}
+export default class createModal extends Modal<createModalAttrs, undefined> {
     name: string = "";
     data: {
         key: string,
         content: string
     }[] = [];
     loading = false;
+
+    oninit(vnode: Mithril.Vnode): void {
+        super.oninit(vnode);
+    }
     className(): string {
         return "Modal Modal--large"
     }
@@ -95,7 +103,10 @@ export default class createModal extends Modal {
             }
         }).then(() => {
             app.modal.close();
-        }).catch(() => {
+            if (this.attrs.itemsCreated) {
+              this.attrs.itemsCreated()
+            }
+        }).finally(() => {
             this.loading = false;
             m.redraw();
         });
