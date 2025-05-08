@@ -21,7 +21,7 @@ xypp-store-virtual-item:
       fillTip: "将键名/内容填入下方"
       submit: 创建
       add: 添加
-      convert: 转换 键名-内容
+      convert: 转换 键名:内容
       key_required: 键名不能为空
   forum:
     store:

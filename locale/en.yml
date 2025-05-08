@@ -21,7 +21,7 @@ xypp-store-virtual-item:
       fillTip: "Put your key/content below. "
       submit: Create
       add: Add
-      convert: Convert Key-Content
+      convert: Convert Key:Content
       key_required: Empty key is not allowed
   forum:
     store:
