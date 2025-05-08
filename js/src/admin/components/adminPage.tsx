@@ -44,6 +44,7 @@ export default class adminPage extends ExtensionPage {
                     <div className="actions-start">
                         <Select options={this.filterMap} value={this.currentFilter} onchange={((e: string) => {
                             this.currentFilter = e;
+                            this.name = this.currentFilter == 'all' ? '' : this.currentFilter;
                             this.offset = 0;
                             this.items = [];
                             this.more = true;
