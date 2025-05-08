@@ -6,6 +6,8 @@ import LoadingIndicator from "flarum/common/components/LoadingIndicator";
 import VirtualItem from "../../common/models/VirtualItem";
 import Checkbox from "flarum/common/components/Checkbox";
 import Select from "flarum/common/components/Select";
+import icon from 'flarum/common/helpers/icon';
+import withAttr from 'flarum/common/utils/withAttr';
 import createModal from "./createModal";
 function _trans(key: string, ...a: any[]) {
     return app.translator.trans(`xypp-store-virtual-item.admin.table.${key}`, ...a);
@@ -30,7 +32,7 @@ export default class adminPage extends ExtensionPage {
             method: "GET",
             url: app.forum.attribute("apiUrl") + "/virtual-items-name"
         }).then(((data: { name: string, count: number }[]) => {
-            this.filterMap = { all: _trans("all") as string };
+            // this.filterMap = { all: _trans("all") as string };
             data.forEach((item) => {
                 this.filterMap[item.name] = `${item.name}(${item.count})`;
             })
@@ -42,14 +44,31 @@ export default class adminPage extends ExtensionPage {
                 <div className="xypp-store-virtual-item-adminPage-actions">
 
                     <div className="actions-start">
-                        <Select options={this.filterMap} value={this.currentFilter} onchange={((e: string) => {
-                            this.currentFilter = e;
-                            this.name = this.currentFilter == 'all' ? '' : this.currentFilter;
-                            this.offset = 0;
-                            this.items = [];
-                            this.more = true;
-                            this.loadMore();
-                        }).bind(this)}></Select>
+                        <span className="Select">
+                            <select
+                              className="Select-input FormControl"
+                              onchange={
+                                withAttr('value',
+                                    ((e: string) => {
+                                        this.currentFilter = e;
+                                        this.name = this.currentFilter == 'all' ? '' : this.currentFilter;
+                                        this.offset = 0;
+                                        this.items = [];
+                                        this.more = true;
+                                        this.loadMore();
+                                    }).bind(this)
+                                )
+                              }
+                              value={this.currentFilter}
+                            >
+                              <option value="all">{ _trans("all")}</option>
+                              {Object.keys(this.filterMap).map((key) => (
+                                <option value={key}>{this.filterMap[key]}</option>
+                              ))}
+                            </select>
+                            {icon('fas fa-sort', { className: 'Select-caret' })}
+                        </span>
+
                         {showIf(this.selected.length > 0,
                             <Button className="Button Button--primary" onclick={this.removeBatch.bind(this)} disabled={this.batchRemoving} loading={this.batchRemoving} >
                                 {_trans("delete_batch", { count: this.selected.length })}
